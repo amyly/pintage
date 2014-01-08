@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20131214055643) do
   end
 
   create_table "users", force: true do |t|
+    t.string   "pinboard_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",                  default: "", null: false

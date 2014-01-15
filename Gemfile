@@ -5,6 +5,7 @@ gem 'rails', '4.0.0'
 
 gem 'nokogiri'
 gem 'devise'
+gem 'mandrill-api'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -31,7 +32,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 # Pinboard gem
-gem 'pinboard'
+gem 'pinboard_api'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

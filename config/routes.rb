@@ -5,6 +5,7 @@ Pintage::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
   devise_for :users, :controllers => { :registrations => "registrations" }
+  match 'pinboard' => 'bookmarks#create', as: 'pinboard', via: :get
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

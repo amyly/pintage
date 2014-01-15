@@ -5,15 +5,21 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :bookmarks
 
-  # def get_pinboard_token(user)
-  #   uri = URI.parse('https://api.pinboard.in/v1/user/api_token/')
-  #   req = Net::HTTP::Get.new uri
-  #   res = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request req}
-  #   if res = Net::HTTPUnauthorized
-  #     "boo"
-  #   else
-  #     pinboard_token = Nokogiri::Slop(res.body)
-  #     user.pinboard_token = pinboard_token.result.content
-  #   end
-  # end
+  def get_all_pins(current_user)
+    if current_user.pinboard_token != nil
+      bookmark_id = 0
+      PinboardApi.auth_token = current_user.pinboard_token
+      pins = PinboardApi::Post.all
+      pins.each do |pin|
+        bookmark = Bookmark.new
+        bookmark.user_bookmark_id = bookmark_id
+        bookmark.url = pin.url.to_s
+        bookmark.title = pin.description.to_s
+        bookmark.description = pin.extended.to_s
+        bookmark.user_id = current_user.id
+        bookmark_id += 1
+        bookmark.save
+      end
+    end
+  end
 end

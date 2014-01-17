@@ -16,24 +16,22 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-
-
   <div><%= f.submit "Update Password" %></div>
 <% end %>
 
+<h3>Add Instapaper account</h3>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
   <% if current_user.pinboard_token %>
-    <div>You're connected as <b><%= current_user.pinboard_token.split(':')[0] %></b> <i>Unlink</i></div>
+    <div>You're connected as <b><%= current_user.pinboard_token.split(':')[0] %></b> <%= link_to "Unlink", pinboard_unlink_path %></i></div>
   <% else %>
     <div>
-      <%= f.label :pinboard_token %> <i>(https://pinboard.in/settings/password)</i> <br>
+      <%= f.label :pinboard_token %> <i>(<%= link_to "https://pinboard.in/settings/password", "https://pinboard.in/settings/password" %>)</i> <br>
       <%= f.text_field :pinboard_token %>
     </div>
     <div><%= f.submit "Add" %></div>
   <% end %>
 <% end %>
-
 
 <h3>Cancel my account</h3>
 

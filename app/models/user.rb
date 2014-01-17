@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :bookmarks
 
-  def get_all_pins(current_user)
+  def get_all_bookmarks(current_user)
     if current_user.pinboard_token != nil
       bookmark_id = 0
       PinboardApi.auth_token = current_user.pinboard_token
@@ -21,5 +21,18 @@ class User < ActiveRecord::Base
         bookmark.save
       end
     end
+  end
+
+  def delete_all_bookmarks(current_user)
+    current_user.bookmarks.delete_all
+    current_user.update_attribute(:pinboard_token, nil)
+  end
+
+  def get_random_bookmark(current_user)
+    begin @random_bookmark = current_user.bookmarks[rand(current_user.bookmarks.length)]
+    end until @random_pin.sent_back == false
+    # @random_pin.sent_back == true
+    # @random_pin.save!
+    @random_pin
   end
 end

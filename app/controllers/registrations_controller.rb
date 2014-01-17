@@ -16,7 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_in @user, :bypass => true
       if account_update_params[:pinboard_token].present?
         current_user.get_all_pins(current_user)
-        redirect_to "/pinboard"
+        redirect_to pinboard_add_path
       else
         redirect_to after_update_path_for(@user)
       end

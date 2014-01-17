@@ -1,7 +1,13 @@
 class BookmarksController < ApplicationController
-  def create
+  def create_pinboard
     @user = User.find(current_user.id)
-    @user.get_all_pins(@user)
-    redirect_to root_url
+    @user.get_all_bookmarks(@user)
+    redirect_to root_url, notice: "Success! Your bookmarks have been retrieved."
+  end
+
+  def delete_pinboard
+    @user = User.find(current_user.id)
+    @user.delete_all_bookmarks(@user)
+    redirect_to edit_user_registration_path, notice: "Your Pinboard account was disconnected."
   end
 end

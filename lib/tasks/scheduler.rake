@@ -1,3 +1,5 @@
+require 'mandrill'
+
 desc "This task is called by the Heroku scheduler add-on"
 # task :update_feed => :environment do
 #   puts "Updating feed..."
@@ -5,12 +7,8 @@ desc "This task is called by the Heroku scheduler add-on"
 #   puts "done."
 # end
 
-task :send_random_bookmark => :environment do
-  puts "Looping through users and sending random bookmark"
-  User.all.each do |user|
-    if user.pinboard_token
-      user.send_random_bookmark(user)
-    end
-  end
+task :send_random_bookmarks => :environment do
+  puts "Sending random bookmark to each user"
+  User.send_random_bookmarks
   puts "Done"
 end

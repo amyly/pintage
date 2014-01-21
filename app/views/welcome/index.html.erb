@@ -1,5 +1,6 @@
-<p>Hello!</p>
-
-<% @bookmarks.each do |bookmark|  %>
-  <%= bookmark.url %><br>
+<% if current_user %>
+  <% @bookmarks.each do |bookmark|  %>
+    <%= bookmark.url %><br>
+  <% end %>
+<% else %>
 <% end %>

@@ -5,7 +5,7 @@ Pintage::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
   devise_for :users, :controllers => { :registrations => "registrations" }
-  post 'pinboard/add' => 'bookmarks#create_pinboard'
+  get 'pinboard/add' => 'bookmarks#create_pinboard'
   get 'pinboard/unlink' => 'bookmarks#delete_pinboard'
 
   # Example of regular route:

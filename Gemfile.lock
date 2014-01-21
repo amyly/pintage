@@ -139,7 +139,7 @@ DEPENDENCIES
   devise
   jbuilder (~> 1.2)
   jquery-rails
-  mandrill-api
+  mandrill-api (~> 1.0.49)
   nokogiri
   pinboard_api
   rails (= 4.0.0)

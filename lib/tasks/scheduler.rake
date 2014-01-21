@@ -5,9 +5,12 @@ desc "This task is called by the Heroku scheduler add-on"
 #   puts "done."
 # end
 
-# task :send_random_pin => environment do
-#   puts "Choosing a random pin"
-#   User.get_random_pin
-#   # send placeholder
-#   puts "Done"
-# end
+task :send_random_bookmark => :environment do
+  puts "Looping through users and sending random bookmark"
+  User.all.each do |user|
+    if user.pinboard_token
+      user.send_random_bookmark(user)
+    end
+  end
+  puts "Done"
+end

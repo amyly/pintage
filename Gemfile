@@ -5,7 +5,7 @@ gem 'rails', '4.0.0'
 
 gem 'nokogiri'
 gem 'devise'
-gem 'mandrill-api'
+gem "mandrill-api", "~> 1.0.49"
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

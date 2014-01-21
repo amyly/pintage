@@ -6,12 +6,17 @@ class User < ActiveRecord::Base
   has_many :bookmarks
 
   def get_all_bookmarks(current_user)
+    get_all_pinboard(current_user)
+  end
+
+  def get_all_pinboard(current_user)
     if current_user.pinboard_token != nil
-      bookmark_id = 0
       PinboardApi.auth_token = current_user.pinboard_token
       pins = PinboardApi::Post.all
+      bookmark_id = 0
       pins.each do |pin|
         bookmark = Bookmark.new
+        bookmark.source = "pinboard"
         bookmark.user_bookmark_id = bookmark_id
         bookmark.url = pin.url.to_s
         bookmark.title = pin.description.to_s
@@ -24,15 +29,38 @@ class User < ActiveRecord::Base
   end
 
   def delete_all_bookmarks(current_user)
-    current_user.bookmarks.delete_all
+    delete_all_pinboard(current_user)
+  end
+
+  def delete_all_pinboard(current_user)
+    current_user.bookmarks.where(:source => "pinboard").delete_all
     current_user.update_attribute(:pinboard_token, nil)
   end
 
   def get_random_bookmark(current_user)
-    begin @random_bookmark = current_user.bookmarks[rand(current_user.bookmarks.length)]
-    end until @random_pin.sent_back == false
-    # @random_pin.sent_back == true
-    # @random_pin.save!
-    @random_pin
+    begin random_bookmark = current_user.bookmarks[rand(current_user.bookmarks.length)]
+    end until random_bookmark.sent_back == false
+    random_bookmark.update_attributes(:sent_back => true, :sent_back_date => DateTime.now)
+    random_bookmark
+  end
+
+  def send_random_bookmark(current_user)
+    m = Mandrill::API.new
+    random_bookmark = current_user.get_random_bookmark(current_user)
+    message = {
+      :subject=> "Your Random Bookmark",
+      :from_name=> "Pintage",
+      :text=>"Your random pin is #{random_bookmark.url}",
+      :to=>[
+        {
+          :email=> current_user.email
+          # :name=> ""
+        }
+      ],
+      :html=>"<html><h1>Hi! Your random pin is #{random_bookmark.url} #{random_bookmark.id}</h1></html>",
+      :from_email=>"a@amys.ly"
+    }
+    sending = m.messages.send message
+    puts sending
   end
 end

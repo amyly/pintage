@@ -4,15 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :bookmarks
-  validates :pinboard_token, format: { with: /[a-z0-9]+\:[A-Z0-9]{20}/, message: "Needs to follow Pinboard token format" }
+  # validates :pinboard_token, format: { with: /[a-z0-9]+\:[A-Z0-9]{20}/, message: "Needs to follow Pinboard token format" }
 
-  def get_all_bookmarks(user)
-    get_all_pinboard(user)
+  def get_all_bookmarks
+    get_all_pinboard
   end
 
-  def get_all_pinboard(user)
-    if user.pinboard_token != nil
-      PinboardApi.auth_token = user.pinboard_token
+  def get_all_pinboard
+    if pinboard_token != nil
+      PinboardApi.auth_token = pinboard_token
       pins = PinboardApi::Post.all
       bookmark_id = 0
       pins.each do |pin|
@@ -20,26 +20,27 @@ class User < ActiveRecord::Base
         bookmark.source = "pinboard"
         bookmark.user_bookmark_id = bookmark_id
         bookmark.url = pin.url.to_s
+        bookmark.tags = pin.tags.to_s
         bookmark.title = pin.description.to_s
         bookmark.description = pin.extended.to_s
-        bookmark.user_id = user.id
+        bookmark.user_id = self.id
         bookmark_id += 1
         bookmark.save
       end
     end
   end
 
-  def delete_all_bookmarks(user)
-    delete_all_pinboard(user)
+  def delete_all_bookmarks
+    delete_all_pinboard
   end
 
-  def delete_all_pinboard(user)
-    user.bookmarks.where(:source => "pinboard", :sent_back => false).delete_all
-    user.update_attribute(:pinboard_token, nil)
+  def delete_all_pinboard
+    bookmarks.where(:source => "pinboard", :sent_back => false).delete_all
+    update_attribute(:pinboard_token, nil)
   end
 
-  def get_random_bookmark(user)
-    begin random_bookmark = user.bookmarks[rand(user.bookmarks.length)]
+  def get_random_bookmark
+    begin random_bookmark = bookmarks[rand(bookmarks.length)]
     end until random_bookmark.sent_back == false
     random_bookmark.update_attributes(:sent_back => true, :sent_back_date => DateTime.now)
     random_bookmark
@@ -48,7 +49,7 @@ class User < ActiveRecord::Base
   def self.send_random_bookmarks
     User.find_each do |user|
       m = Mandrill::API.new
-      random_bookmark = user.get_random_bookmark(user)
+      random_bookmark = user.get_random_bookmark
       message = {
         :subject=> "Your Random Bookmark",
         :from_name=> "Pintage",

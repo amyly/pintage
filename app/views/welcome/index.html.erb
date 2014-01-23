@@ -1,6 +1,9 @@
+<h4>Sent Back Archive</h4>
+<div>
 <% if current_user %>
-  <% @bookmarks.each do |bookmark|  %>
-    <%= bookmark.url %><br>
+  <% @sent_bookmarks.each do |bookmark|  %>
+    <%= bookmark.sent_back_date.strftime("%m/%d/%Y") %>: <%= link_to bookmark.url, bookmark.url %><br>
   <% end %>
 <% else %>
 <% end %>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117042815) do
+ActiveRecord::Schema.define(version: 20140123003431) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140117042815) do
     t.boolean  "sent_back",        default: false
     t.string   "source"
     t.datetime "sent_back_date"
+    t.string   "tags"
   end
 
   create_table "users", force: true do |t|
@@ -41,7 +42,6 @@ ActiveRecord::Schema.define(version: 20140117042815) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "user_bookmark_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

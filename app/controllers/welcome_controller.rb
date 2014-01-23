@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
   def index
     if current_user
-      @bookmarks = User.find(current_user.id).bookmarks.where(sent_back: true).order(sent_back_date: :desc)
+      @sent_bookmarks = User.find(current_user.id).bookmarks.where(sent_back: true).order(sent_back_date: :desc)
     end
   end
 end

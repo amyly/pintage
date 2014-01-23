@@ -6,7 +6,6 @@ class CreateBookmarks < ActiveRecord::Migration
       t.string :title
       t.string :description
       t.datetime :save_date
-
       t.timestamps
     end
   end

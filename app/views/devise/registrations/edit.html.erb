@@ -18,7 +18,7 @@
 <% end %>
 
 <!-- re-write this -->
-<h3>Add Instapaper account</h3>
+<h3>Add Pinboard.in account</h3>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <% if current_user.pinboard_token %>
     <div>You're connected as <b><%= current_user.pinboard_token.split(':')[0] %></b> <%= link_to "Unlink", pinboard_unlink_path %></i></div>
@@ -33,6 +33,7 @@
 
 <h3>Add Pocket account</h3>
 
+<p>Coming soon!</p>
 <!-- <h3>Cancel my account</h3> -->
 
 <!-- <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p> -->

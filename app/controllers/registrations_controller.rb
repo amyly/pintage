@@ -15,7 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
       # Sign in the user bypassing validation in case his password changed
       sign_in @user, :bypass => true
       if account_update_params[:pinboard_token].present?
-        current_user.get_all_bookmarks(current_user)
+        current_user.get_all_bookmarks
         redirect_to pinboard_add_path
       else
         redirect_to after_update_path_for(@user)

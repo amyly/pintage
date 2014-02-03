@@ -14,18 +14,18 @@ class User < ActiveRecord::Base
     if pinboard_token != nil
       PinboardApi.auth_token = pinboard_token
       pins = PinboardApi::Post.all
-      bookmark_id = 0
       pins.each do |pin|
-        bookmark = Bookmark.new
-        bookmark.source = "pinboard"
-        bookmark.user_bookmark_id = bookmark_id
-        bookmark.url = pin.url.to_s
-        bookmark.tags = pin.tags.to_s
-        bookmark.title = pin.description.to_s
-        bookmark.description = pin.extended.to_s
-        bookmark.user_id = self.id
-        bookmark_id += 1
-        bookmark.save
+        if self.bookmarks.find_by(url: pin.url).nil?
+          bookmark = Bookmark.new
+          bookmark.source = "pinboard"
+          bookmark.url = pin.url.to_s
+          bookmark.tags = pin.tags.to_s
+          bookmark.title = pin.description.to_s
+          bookmark.description = pin.extended.to_s
+          bookmark.saved_date = pin.time
+          bookmark.user_id = self.id
+          bookmark.save
+        end
       end
     end
   end

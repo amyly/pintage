@@ -2,24 +2,22 @@
 <html>
 <head>
   <title>Pintage</title>
-  <link href='http://fonts.googleapis.com/css?family=Petrona' rel='stylesheet' type='text/css'>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <div class="container">
-    <h1><%= link_to "Pintage", root_path %></h1>
-    <%= render 'layouts/flash_messages' %>
-
-    <div id="user_nav">
+    <div><%= image_tag("pintage-logo-lockup.png", size: "50x82") %></div>
+    <h1><%= link_to "Pintage".html_safe, root_path %> <small>revisit what you've saved.</small></h1>
+    <p>
       <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path %> | <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Sign up', new_user_registration_path %> | <%= link_to 'Login', new_user_session_path %>
+      <%= link_to "About", root_path %> | <%= link_to 'Settings', edit_user_registration_path %> | <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
       <% end %>
+    </p>
+    <div class="clearfix"></div>
+    <hr>
+    <%= render 'layouts/flash_messages' %>
     <%= yield %>
-  </div>
 </body>
 </html>

@@ -14,8 +14,12 @@
 
 .container {
   padding-top: 30px;
+  text-align: center;
 }
 
 $brand-primary: #ff0033;
+$grid-gutter-width: 30px;
+$container-desktop: ((640px + $grid-gutter-width));
+$container-large-desktop: ((500px + $grid-gutter-width));
 
 @import "bootstrap";

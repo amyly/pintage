@@ -8,8 +8,8 @@
 </head>
 <body>
   <div class="container">
-    <div><%= image_tag("pintage-logo-lockup.png", size: "50x82") %></div>
-    <h1><%= link_to "Pintage".html_safe, root_path %> <small>revisit what you've saved.</small></h1>
+    <div><%= image_tag("pintage-logo-new.png", size: "50x82") %></div>
+    <h1><%= link_to "Pintage".html_safe, root_path %><br><small>Send back what you've saved.</small></h1>
     <p>
       <% if user_signed_in? %>
       <%= link_to "About", root_path %> | <%= link_to 'Settings', edit_user_registration_path %> | <%= link_to 'Logout', destroy_user_session_path, method: :delete %>

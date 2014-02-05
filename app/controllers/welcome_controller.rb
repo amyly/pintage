@@ -5,8 +5,4 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def sign_up_flow
-    @new_user_email = params[:email]
-    redirect_to new_user_registration_path
-  end
 end

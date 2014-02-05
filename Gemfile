@@ -5,7 +5,9 @@ gem 'rails', '4.0.0'
 
 gem 'nokogiri'
 gem 'devise'
-gem "mandrill-api", "~> 1.0.49"
+gem 'mandrill-api', '~> 1.0.49'
+gem 'omniauth-pocket'
+gem 'pocket-ruby'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -34,6 +36,8 @@ gem 'jbuilder', '~> 1.2'
 
 # Pinboard gem
 gem 'pinboard_api'
+
+gem 'json'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

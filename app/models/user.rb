@@ -1,10 +1,11 @@
+require 'pocket'
+require 'mandrill'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :bookmarks
-  require 'pocket'
   # validates :pinboard_token, format: { with: /[a-z0-9]+\:[A-Z0-9]{20}/, message: "Needs to follow Pinboard token format" }
 
   def add_pocket_token(auth)
@@ -69,7 +70,27 @@ class User < ActiveRecord::Base
     random_bookmark
   end
 
-  def self.send_random_bookmarks
+  def send_single_random_bookmarks
+    m = Mandrill::API.new
+    random_bookmark = get_random_bookmark
+    message = {
+      :subject=> "Your Random Bookmark",
+      :from_name=> "Pintage",
+      :text=>"Your random pin is #{random_bookmark.url}",
+      :to=>[
+        {
+          :email=> self.email
+          # :name=> ""
+        }
+      ],
+      :html=>"<html><h1>Hi! Your random pin is #{random_bookmark.url} #{random_bookmark.id}</h1></html>",
+      :from_email=>"a@amys.ly"
+    }
+    sending = m.messages.send message
+    puts sending
+  end
+
+  def self.send_all_random_bookmarks
     User.find_each do |user|
       m = Mandrill::API.new
       random_bookmark = user.get_random_bookmark

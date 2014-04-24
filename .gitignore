@@ -16,4 +16,3 @@
 /tmp
 /config/app_environment_variables.rb
 .DS_Store
-/config/initializers/secret_token.rb

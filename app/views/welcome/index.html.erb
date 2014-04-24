@@ -1,33 +1,41 @@
 <% if current_user %>
   <% if current_user.pinboard_token.nil? && current_user.pocket_token.nil? %>
     <p>We don't have any bookmarks to send back!</p>
-    <%= link_to "Connect your accounts >>", edit_user_registration_path, :type => "button", :class => "btn btn-primary" %>
+    <%= link_to "Connect Your Accounts", edit_user_registration_path, :type => "button", :class => "btn btn-primary" %>
+    <hr>
+  <% else %>
+    <p>Impatient?</p>
+    <%= link_to "Send a Bookmark Now", bookmarks_send_path, :type => "button", :class => "btn btn-primary" %>
+    <hr>
   <% end %>
-  <hr>
-  <h4>Email Archive</h4>
+
   <div class="archive">
+    <h4>Sent Back Archive</h4>
       <% @sent_bookmarks.each do |bookmark|  %>
         <div class="archive-bookmark">
           <div class="archive-bookmark-email-date">
             <i class="icon ion-android-mail"></i> <%= bookmark.sent_back_date.strftime("%b %d, %Y") %>
           </div>
-          <div class="archive-bookmark-link"><%= link_to bookmark.title, bookmark.url, html_options = { title: JSON.parse(bookmark.tags).each{|tag| tag} } %></div>
+          <div class="archive-bookmark-link">
+            <% if bookmark.title.present? %>
+              <%= link_to bookmark.title, bookmark.url %>
+            <% else %>
+              <%= link_to bookmark.url, bookmark.url %>
+            <% end %></div>
           <div class="archive-bookmark-date">
              saved <%= ((bookmark.sent_back_date-bookmark.saved_date)/86400).to_i %> days ago via <%= bookmark.source %>
           </div>
         </div>
       <% end %>
+      <p><%= link_to "back to top", "#top" %></p>
     </div>
 <% else %>
-<!-- <p>How many bookmarks do you have? Get an old bookmark in your inbox each week.</p>
-<%= link_to '<button type="button" class="btn btn-primary btn-lg">Sign Up For Random Bookmarks</button>'.html_safe, new_user_registration_path %> -->
-
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p>...</p>
-  <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
-</div>
-
-<div>Have an account? <%= link_to 'Login here.'.html_safe, new_user_session_path %></div>
+  <p>Get an old bookmark in your inbox each week:</p>
+  <%= form_tag(new_user_registration_path, method: 'post') do %>
+  <%= email_field(:email, :address) %>
+  <%= submit_tag("Get Started") %>
+  <% end %>
+  <hr>
+  <div><%= link_to 'Login'.html_safe, new_user_session_path %></div>
 <% end %>
 

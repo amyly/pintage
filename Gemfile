@@ -8,6 +8,7 @@ gem 'devise'
 gem 'mandrill-api', '~> 1.0.49'
 gem 'omniauth-pocket'
 gem 'pocket-ruby'
+gem 'simple_form', '~> 3.0.1'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

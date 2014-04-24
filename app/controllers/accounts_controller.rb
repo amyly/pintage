@@ -1,4 +1,3 @@
-
 class AccountsController < ApplicationController
   def add_pocket
     current_user.add_pocket_token(env["omniauth.auth"])

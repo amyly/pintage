@@ -7,17 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <a id="top"></a>
   <div class="container">
-    <div><%= image_tag("pintage-logo-new.png", size: "50x82") %></div>
-    <h1><%= link_to "Pintage".html_safe, root_path %><br><small>Send back what you've saved.</small></h1>
+    <div><%= link_to image_tag("pintage-logo-new.png", size: "82x162"), root_path %></div>
+    <h1><%= link_to "Pintage".html_safe, root_path %></h1>
+    <h4>Send back what you've saved.</h4>
     <p>
       <% if user_signed_in? %>
-      <%= link_to "About", root_path %> | <%= link_to 'Settings', edit_user_registration_path %> | <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+      <%= link_to "About", about_path %> | <%= link_to 'Settings', edit_user_registration_path %> | <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
       <% end %>
     </p>
     <div class="clearfix"></div>
     <hr>
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
+  <footer>
+    Created by <%= link_to "@amyly", "http://twitter.com/amyly" %>
+  </footer>
 </body>
 </html>

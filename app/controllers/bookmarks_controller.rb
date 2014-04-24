@@ -16,4 +16,10 @@ class BookmarksController < ApplicationController
     @user.delete_all_pocket
     redirect_to edit_user_registration_path, notice: "Your Pocket account has been disconnected."
   end
+
+  def send_single_bookmark
+    @user = User.find(current_user.id)
+    @user.send_single_random_bookmarks
+    redirect_to root_path, notice: "Check your inbox!"
+  end
 end

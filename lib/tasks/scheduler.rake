@@ -9,6 +9,6 @@ desc "This task is called by the Heroku scheduler add-on"
 
 task :send_random_bookmarks => :environment do
   puts "Sending random bookmark to each user"
-  User.send_random_bookmarks
+  User.send_all_random_bookmarks
   puts "Done"
 end

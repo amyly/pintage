@@ -15,6 +15,12 @@
 .container {
   padding-top: 30px;
   text-align: center;
+  padding-bottom: 10px;
+}
+
+footer {
+  padding-top: 10px;
+  font-size: 12px;
 }
 
 $brand-primary: #ff0033;
@@ -23,3 +29,7 @@ $container-desktop: ((640px + $grid-gutter-width));
 $container-large-desktop: ((500px + $grid-gutter-width));
 
 @import "bootstrap";
+
+h4 {
+  color: $gray-light;
+}
